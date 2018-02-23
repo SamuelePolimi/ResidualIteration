@@ -34,7 +34,7 @@ S = lambda b: gamma * np.matmul(P,b)
 """ Samples S operator"""
 SSample = lambda b: gamma * np.matmul(PSampleMean(),b)
 """ Approximator Operator"""
-approx  = lambda f: f + np.random.normal(np.zeros_like(f), 0.01 * np.abs(f))
+approx  = lambda f: f + np.random.normal(np.zeros_like(f), .01 * np.abs(f))
 
 """------------------------ Algorithms -------------------------"""
 
@@ -75,10 +75,10 @@ for _ in range(100):
     print '.',
     for alpha in alphas:
         errors_perfect.append(MixedApproximateIterationBoosting(alpha))
-        #errors_samples.append(MixedApproximateIterationBoostingSamples(alpha))
+        errors_samples.append(MixedApproximateIterationBoostingSamples(alpha))
 
     error_perfect_matrix = np.concatenate((error_perfect_matrix, [errors_perfect]), axis=0)
-    #error_samples_matrix = np.concatenate((error_samples_matrix, [errors_samples]), axis=0)
+    error_samples_matrix = np.concatenate((error_samples_matrix, [errors_samples]), axis=0)
 
 m = np.mean(error_perfect_matrix, axis=0)
 c = 2. * np.std(error_perfect_matrix / 10., axis=0)
