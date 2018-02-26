@@ -13,15 +13,11 @@ P = np.matmul(np.diag(marg), P)
 n_iteration = input("How many iteration would you like to run for evaluating V? ")
 
 """---------------- Sampled MDP --------------------------------"""
-RSample = lambda : np.random.normal(R, 0.5)
-def PSample() :
-    indexes = np.array(map(lambda x: np.random.choice(len(x), 1, p=x), P)).ravel()
-    n_values = len(indexes)
-    return np.eye(n_values)[indexes]
 N_Future_States = 50
-
-def PSampleMean():
-    return sum(map(lambda x: PSample(), range(N_Future_States)))/(N_Future_States)
+RSample = lambda : np.random.normal(R, 0.5)
+def PSampleMean() :
+    samples = np.array(map(lambda x: np.random.multinomial(N_Future_States, x), P))
+    return samples/(N_Future_States+0.)
 
 
 """---------------------- OPERATORS --------------------------------------"""
